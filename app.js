@@ -4,7 +4,27 @@ const apiUrl ="https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
 const searchBox = document.querySelector(".search input");
 const searchBtn = document.querySelector(".search button");
 const weatherIcon = document.querySelector(".weather-icon");
+const countryFlag = document.querySelector(".flag");
+const sunriseTime = document.querySelector(".sunrise");
+const sunsetTime = document.querySelector(".sunset");
 
+function convertTime(timestamp, timezoneOffset) {
+    // Create a new Date object based on the timestamp and offset
+    const date = new Date((timestamp + timezoneOffset) * 1000);
+  
+    // Extract hours and minutes
+    let hours = date.getUTCHours();
+    const minutes = date.getUTCMinutes();
+  
+    // Determine AM or PM
+    const ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12 || 12; // Convert to 12-hour format
+  
+    // Format minutes to always show two digits
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+  
+    return `${hours}:${formattedMinutes} ${ampm}`;
+  }
 async function checkWeather(city){
     const response = await fetch(apiUrl + city +  `&appid=${apikey}`);
 
@@ -36,8 +56,13 @@ async function checkWeather(city){
             weatherIcon.src = "images/mist.png" 
         }
         document.querySelector(".weather").style.display ="block";
+        countryFlag.src = `https://flagsapi.com/${data.sys.country}/flat/32.png`;
+        sunriseTime.innerText = convertTime(data.sys.sunrise, data.timezone);
+        sunsetTime.innerText = convertTime(data.sys.sunset,data.timezone);
+
         
     }
+
     
         
     }

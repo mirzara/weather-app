@@ -69,6 +69,8 @@ body{
     justify-content: space-between;
     padding: 0 20px;/*top bottom 0 n leftright 20px*/
     margin-top: 50px;
+    flex-wrap: wrap;
+    gap: 30px;
 
 }
 .col{
@@ -94,4 +96,13 @@ body{
     margin-top: 10px;
     display: none;
 
+}
+.wrapper{
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    gap:0.5rem;
+}
+.col{
+    width:40%;
 }
